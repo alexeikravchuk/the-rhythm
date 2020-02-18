@@ -1,0 +1,251 @@
+*, *:before, :after{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    background: black;
+}
+
+.wrapper{
+   margin: auto;
+}
+.container{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+.header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 50;
+}
+.header:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #001273;
+    z-index: 2;
+}
+.header_body{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+}
+.header_logo{
+    flex: 0 0 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    z-index: 3;
+}
+.header_logo img {
+    max-width: 100%;
+    display: block;
+}
+.header_burger{
+    display: none;
+}
+
+.header_list{
+    display: flex;
+    position: relative;
+    z-index: 2;
+}
+.header_list li {
+    list-style: none;
+    margin: 0 0 0 20px;
+}
+.header_link{
+    display: block;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 18px;
+    text-decoration: none;
+    background-color: #292D3E;
+    border: 1px solid #1D9AF2;
+    border-radius: 7px;
+    padding: 5px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.header_link:hover {
+    animation: swing 1s ease;
+    animation-iteration-count: 1;
+    text-shadow: 0 0 10px rgb(255, 255, 255);
+}
+@keyframes swing {
+    15% {
+        transform: translateX(4px);
+    }
+    30% {
+        transform: translateX(-4px);
+    }
+    50% {
+        transform: translateX(2px);
+    }
+    65% {
+        transform: translateX(-2px);
+    }
+    80% {
+        transform: translateX(1px);
+    }
+    100% {
+        transform: translateX(0);
+    }}
+
+@media (max-width: 767px) {
+    body.lock{
+        overflow: hidden;
+    }
+    .header_body{
+        height: 45px;
+    }
+    .header_logo {
+        flex: 0 0 40px;
+    }
+    .header_burger{
+        display: block;
+        position: relative;
+        width: 30px;
+        height: 20px;
+        z-index: 3;
+    }
+    .header_burger span {
+        position: absolute;
+        background-color: #fff;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        top: 9px;
+        transition: all 0.3s ease 0s;
+    }
+    .header_burger:before,
+    .header_burger:after {
+        content: '';
+        background-color: #fff;
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        left: 0;
+        transition: all 0.3s ease 0s;
+    }
+    .header_burger:before{
+        top: 0;
+    }
+    .header_burger:after{
+        bottom: 0;
+    }
+    .header_burger.active:before {
+        transform: rotate(45deg);
+        top: 9px;
+    }
+    .header_burger.active:after {
+        transform: rotate(-45deg);
+        bottom: 9px;
+    }
+    .header_burger.active span {
+        transform: scale(0);
+    }
+    .header_menu{
+        position: fixed;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: auto;
+        overflow: auto;
+        transition: all 0.5s ease 0s;
+        background-color: rgba(0, 5, 45, 0.78);
+        padding: 70px 30px 20px 30px;
+    }
+    .header_menu.active{
+        top: 0;
+    }
+
+    .header_list{
+        display: block;
+    }
+    .header_list li {
+        margin: 10px 0 10px;
+    }
+    .header_link {
+        font-size: 24px;
+        display: block;
+    }
+}
+
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 70px 0 0 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    color: #001273;
+}
+.content.blur {
+    filter: blur(6px);
+}
+
+.myCanvas {
+    background: black;
+    border: 5px solid #001273;
+    max-width: calc(100vw - 10px);
+    max-height: calc(100vh - 80px);
+}
+
+@media (max-width: 767px){
+    .content {
+        padding: 55px 0 0 0;
+    }
+
+    .myCanvas {
+        max-width: calc(100vw - 10px);
+        max-height: calc(100vh - 65px);
+    }
+}
+
+#game_container {
+    position: relative;
+}
+
+.buttons {
+    position: absolute;
+    background: rgba(0, 2, 255, 0.05);
+    width: 96%;
+    height: 17%;
+    bottom: 2%;
+    left: 2%;
+}
+.buttons .btn {
+    display: inline-block;
+    margin: 1%;
+    width: calc(100% / 4 - 3%);
+    border-radius: 40%;
+    height: 95%;
+    z-index: 5;
+    transition: background-color 0.3s ease-out 0s;
+}
+
+@media (max-width: 321px){
+    .buttons .btn {
+        width: calc(100% / 4 - 3.5%);
+    }
+}
+
+.buttons .btn:hover {
+    background: rgba(0,0,200,0.1);
+}
