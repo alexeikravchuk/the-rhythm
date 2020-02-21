@@ -7,8 +7,9 @@
 
 html, body{
     height: 100%;
-    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     background: black;
+    overflow: hidden;
 }
 
 .wrapper{
@@ -67,7 +68,7 @@ html, body{
     list-style: none;
     margin: 0 0 0 20px;
 }
-.header_link{
+.header_link, .start-btn{
     display: block;
     color: #fff;
     text-transform: uppercase;
@@ -80,17 +81,17 @@ html, body{
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
-.header_link:hover {
-    animation: swing 1s ease;
+.header_link:hover, .start-btn:hover {
+    animation: swing 2s ease;
     animation-iteration-count: 1;
     text-shadow: 0 0 10px rgb(255, 255, 255);
 }
 @keyframes swing {
     15% {
-        transform: translateX(4px);
+        transform: translateX(3px);
     }
     30% {
-        transform: translateX(-4px);
+        transform: translateX(-3px);
     }
     50% {
         transform: translateX(2px);
@@ -194,7 +195,7 @@ html, body{
     width: 100vw;
     height: 100vh;
     background: #000000;
-    color: #001273;
+    color: white;
 }
 .content.blur {
     filter: blur(6px);
@@ -248,4 +249,72 @@ html, body{
 
 .buttons .btn:hover {
     background: rgba(0,0,200,0.1);
+}
+
+#modal {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 99%;
+    overflow: hidden;
+    background-color: rgba(10,10,10,0.9);
+}
+
+#modal-content {
+    position: relative;
+    margin: 10% auto;
+    background: black;
+    border: 5px solid #001273;
+    width: 90%;
+    padding: 5px;
+    z-index: 11;
+    line-height: 30px;
+    text-align: center;
+}
+#modal-content #choice-title {
+    text-transform: uppercase;
+    margin: 10px auto;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#track-choice {
+    font-size: 20px;
+}
+
+.start-btn {
+    display: inline-block;
+    margin: 10px auto;
+}
+
+.level-choice {
+    color: white;
+    display: inline-block;
+    margin: 10px auto;
+}
+.level-choice input {
+    margin-left: 10px;
+}
+
+@media (max-height: 420px) {
+    #modal-content {
+        border: 3px solid #001273;
+    }
+    #modal-content #choice-title {
+        font-size: 20px;
+    }
+
+    #choose-form, #nickname {
+        font-size: 12px;
+    }
+
+    .start-btn {
+        margin: 10px auto 5px;
+        font-size: 14px ;
+    }
 }
