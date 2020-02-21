@@ -72,7 +72,7 @@ const startGame = () => {
 
         const playAudio = () => {
             let track = $('#track-choice')[0].value;
-            audio.src = `https://alexeikravchuk.github.io/the-rhythm/audio/${track}.mp3`;
+            audio.src = `audio/${track}.mp3`;
             audio.play();
             $('a.header_link').click(e => {
                 audio.pause();
