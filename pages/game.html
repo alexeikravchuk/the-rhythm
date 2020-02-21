@@ -5,11 +5,33 @@
     <span class="btn" id="down-btn"></span>
     <span class="btn" id="right-btn"></span>
 </div>
-<div class="dialog" style="height: 0">
-    <figure>
-        <audio
-            autoplay="true"
-            src="https://s107.123apps.com/aconv/d/s107cn1bYZVa_mp3_e5IDnaGA.mp3">
-        </audio>
-    </figure>
+<div id="modal">
+    <div id="modal-content">
+        <form>
+            <label id="choice-title" for="track-choice">Choose your Rhythm</label>
+            <select name="track" id="track-choice">
+                <option value="phat">Phat sketch</option>
+                <option value="bass" disabled>Bass action</option>
+                <option value="chill" disabled>Chill guitar</option>
+                <option value="timbre" disabled>Timbre loop</option>
+            </select>
+            <br>
+            <span>Select a game level</span>
+            <br>
+            <div class="level-choice">
+                <input type="radio" id="level-1" name="level" value="1" checked>
+                <label for="level-1">Easy</label>
+                <input type="radio" id="level-2" name="level" value="2">
+                <label for="level-2">Middle</label>
+                <input type="radio" id="level-3" name="level" value="3">
+                <label for="level-3">Hard</label>
+            </div>
+            <br>
+            <a class="start-btn">START</a>
+        </form>
+    </div>
 </div>
+<figure>
+    <audio src="https://alexeikravchuk.github.io/the-rhythm/audio/phat.mp3">
+    </audio>
+</figure>
