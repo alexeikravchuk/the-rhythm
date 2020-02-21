@@ -51,20 +51,20 @@ function loadData(URLHash) {
 let isLoadedGame = false;
 function dataLoaded(data) {
     //loading a game page only once
-    const game = $('#game_container');
-    const page = $('.page');
+    const gameContainer = $('#game_container');
+    const pageContainer = $('#page_container');
     if(window.location.hash === '#game') {
-        page.css('display', 'none');
-        game.css('display', 'block');
+        pageContainer.css('display', 'none');
+        gameContainer.css('display', 'block');
         if(!isLoadedGame) {
-            game.html(data);
+            gameContainer.html(data);
             isLoadedGame = true;
             loadGame();
         }
     } else {
-        game.css('display', 'none');
-        page.css('display', 'block');
-        page.html(data);
+        gameContainer.css('display', 'none');
+        pageContainer.css('display', 'block');
+        pageContainer.html(data);
     }
 }
 

@@ -1,58 +1,215 @@
 class Model {
-    score = 0;
     constructor() {
         this.view = {};
     }
 
     init(view) {
+        this.isStopped = true;
         this.view = view;
-        this.buttons = {
-            left: {
-                isPressed: false,
-                imgUp: this.setBtnImage("left", false),
-                imgDown: this.setBtnImage("left", true),
-                img: () => this.buttons.left.isPressed ? this.buttons.left.imgDown : this.buttons.left.imgUp,
-                posX: 900 / 8 - 100,
-                posY: 1200 - 210
-            },
-            right: {
-                isPressed: false,
-                imgUp: this.setBtnImage("right", false),
-                imgDown: this.setBtnImage("right", true),
-                img: () => this.buttons.right.isPressed ? this.buttons.right.imgDown : this.buttons.right.imgUp,
-                posX: 900 / 8 * 7 - 100,
-                posY: 1200 - 210
-            },
-            up: {
-                isPressed: false,
-                imgUp: this.setBtnImage("up", false),
-                imgDown: this.setBtnImage("up", true),
-                img: () => this.buttons.up.isPressed ? this.buttons.up.imgDown : this.buttons.up.imgUp,
-                posX: 900 / 8 * 3 - 100,
-                posY: 1200 - 210
-            },
-            down: {
-                isPressed: false,
-                imgUp: this.setBtnImage("down", false),
-                imgDown: this.setBtnImage("down", true),
-                img: () => this.buttons.down.isPressed ? this.buttons.down.imgDown : this.buttons.down.imgUp,
-                posX: 900 / 8 * 5 - 110,
-                posY: 1200 - 210
-            },
-        };
+        this.buttons = this.setButtons();
+        this.rhythmLines = this.setRhythmLines();
+        this.nodes = {left:[],up:[],down:[],right:[]};
+        this.nodeQueue = {
+            left:   new Array(5),
+            up:     new Array(5),
+            down:   new Array(5),
+            right:  new Array(5)    };
         this.update();
     }
 
     update(){
         requestAnimationFrame(() => {
             this.view.updateView();
-            this.update();
         });
     }
 
-    setBtnImage(name, isPressed) {
-        const btnImg = new Image(100, 50);
-        btnImg.src = `./img/arrow-${name}-${isPressed ? 'pressed' : 'default'}.png`;
-        return btnImg;
+    animation() {
+        requestAnimationFrame(() => {
+            this.view.updateView();
+            if(!this.isStopped) this.animation();
+        });
+    }
+
+    start() {
+        console.log('start game');
+        this.score = 0;
+        this.level = localStorage.level;
+        this.isStopped = false;
+        this.nodes = JSON.parse(localStorage.nodes);
+        this.nodeQueue = {
+            left:   new Array(5),
+            up:     new Array(5),
+            down:   new Array(5),
+            right:  new Array(5)    };
+        this.startTime = new Date();
+        this.updateNodeQueue();
+        setTimeout(() => {
+            this.moveRhythmNodes();
+            this.animation();
+        }, 2000);
+    }
+    pause() {
+        this.isStopped = true;
+    }
+
+    setButtons() {
+        let canvasWidth = localStorage["canvas.width"];
+        let canvasHeight = localStorage["canvas.height"];
+        class Button {
+            constructor(name, posX, posY) {
+                this.posX = posX;
+                this.posY = posY;
+                this.isPressed = false;
+                this.imgUp = this.setBtnImage(name, false);
+                this.imgDown = this.setBtnImage(name, true);
+                this.img = () => this.isPressed ? this.imgDown : this.imgUp;
+            }
+            setBtnImage(name, isPressed) {
+                const btnImg = new Image(100, 50);
+                btnImg.src = `./img/arrow-${name}-${isPressed ? 'pressed' : 'default'}.png`;
+                return btnImg;
+            }
+        }
+        return {
+            left:   new Button("left",  canvasWidth / 8     - 100, canvasHeight - 210),
+            up:     new Button("up",    canvasWidth / 8 * 3 - 100, canvasHeight - 210),
+            down:   new Button("down",  canvasWidth / 8 * 5 - 110, canvasHeight - 210),
+            right:  new Button("right", canvasWidth / 8 * 7 - 100, canvasHeight - 210)
+        }
+    };
+
+    //creating a queue of nodes of 5 pcs per line and updating
+    updateNodeQueue() {
+        let canvasHeight = localStorage['canvas.height'];
+
+        let updateNodeTimer = setInterval(() => {
+            for(let line in this.nodes) {
+                for(let i = 0; i < this.nodeQueue[line].length; i++) {
+                    let rhythmNode = this.nodeQueue[line][i];
+                    let nodeTime;
+
+                    // if the position is empty or the node leaves the canvas,
+                    // remove the node from the beginning of the stack and add the next node
+                    if(!rhythmNode || rhythmNode.posY > canvasHeight) {
+                        this.nodeQueue[line].shift();
+                        nodeTime = this.nodes[line].shift();
+                        rhythmNode = this.createRhythmNode(line, nodeTime, 1);
+                        this.nodeQueue[line].push(rhythmNode);
+                        if(!rhythmNode) i--;
+                    }
+
+                    //clear timer if node list is empty or if game stopped
+                    if(!this.nodes || this.isStopped) clearInterval(updateNodeTimer);
+                }
+            }
+            //console.log(this.nodeQueue);
+        }, 200);
+    }
+
+    setRhythmLines() {
+        let canvasWidth = localStorage['canvas.width'];
+        let canvasHeight = localStorage['canvas.height'];
+        const startColor = '255,255,255';
+        class RhythmLine {
+            constructor(sX, sY, eX, eY, color) {
+                this.startX = sX;
+                this.startY = sY;
+                this.endX = eX;
+                this.endY = eY;
+                this.color = color;
+            }
+        }
+        return {
+            left:   new RhythmLine(canvasWidth * 5 / 16,    0, canvasWidth / 8,     canvasHeight, startColor),
+            up:     new RhythmLine(canvasWidth * 7 / 16,    0, canvasWidth / 8 * 3, canvasHeight, startColor),
+            down:   new RhythmLine(canvasWidth * 9 / 16,    0, canvasWidth / 8 * 5, canvasHeight, startColor),
+            right:  new RhythmLine(canvasWidth * 11 / 16,   0, canvasWidth / 8 * 7, canvasHeight, startColor),
+        }
+    }
+
+    createRhythmNode(line, time, speed) {
+        let canvasWidth = localStorage['canvas.width'];
+        let canvasHeight = localStorage['canvas.height'];
+        class RhythmNode {
+            constructor(line, startTime, speed) {
+                this.line = line;
+                this.color = '210,100%,50%';
+                this.startTime = startTime;
+                this.speed = speed;
+                this.posX = this.setPosX(this.line);
+                this.posY = 0;
+                this.isChecked = false;
+            }
+            setPosX = (line) => {
+                switch (line) {
+                    case 'left':
+                        return canvasWidth * 5 / 16;
+                    case 'up':
+                        return canvasWidth * 7 / 16;
+                    case 'down':
+                        return  canvasWidth * 9 / 16;
+                    case 'right':
+                        return canvasWidth * 11 / 16;
+                }
+            }
+        }
+        return new RhythmNode(line, time, speed);
+    }
+
+    moveRhythmNodes() {
+        let canvasWidth = localStorage['canvas.width'];
+        let canvasHeight = localStorage['canvas.height'];
+        let moveNodesTimer = setInterval(() => {
+            let currentTime = new Date();
+            let timeOffset = currentTime - this.startTime;
+            for(let line in this.nodeQueue) {
+                for (let node of this.nodeQueue[line]) {
+                    if(node.startTime <= timeOffset) {
+                        changePosition(node);
+                        node.color = `${++node.color.split(',')[0]},${node.color.split(',')[1]},${node.color.split(',')[2]}`;
+                    }
+                }
+            }
+            if(this.isStopped) {
+                clearInterval(moveNodesTimer);
+            }
+        }, 1000/60);
+
+        //this function describes the change in the coordinates of nodes.
+        const changePosition = node => {
+            node.posY +=  node.speed * 10 + (node.speed * 0.2 * this.level);
+
+            switch (node.line) {
+                case 'left':
+                    node.posX = canvasWidth * (5 / 16) - canvasWidth * node.posY * (3 / (16 * canvasHeight));
+                    break;
+                case 'up':
+                    node.posX = canvasWidth * (7 / 16) - canvasWidth * node.posY / (16 * canvasHeight);
+                    break;
+                case 'down':
+                    node.posX = canvasWidth * (9 / 16) + canvasWidth * node.posY / (16 * canvasHeight);
+                    break;
+                case 'right':
+                    node.posX = canvasWidth * (11 / 16) + canvasWidth * node.posY * (3 / (16 * canvasHeight));
+            }
+        }
+    }
+
+    checkHit(line) {
+        let canvasHeight = localStorage['canvas.height'];
+        for(let node of this.nodeQueue[line]) {
+            if(node.posY > canvasHeight - 200 && node.posY < canvasHeight - 70) {
+                node.color = '120,100%,50%';
+                if(!node.isChecked) {
+                    this.score += 50 + (100 * 0.1 * this.level) ;
+                    console.log("попал");
+                }
+                node.isChecked = true;
+            } else if (node.posY > canvasHeight - 70 && !node.isChecked) {
+                node.color = '0,100%,40%';
+                this.score -= 25;
+                console.log("промазал");
+            }
+        }
     }
 }

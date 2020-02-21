@@ -11,7 +11,6 @@ class Controller {
 
     addListeners() {
         let eventAction = (e) => {
-            e.preventDefault();
             let keyAction = e.keyCode || e.target.id;
             //console.log(e.type + ": " + keyAction);
             switch (e.type) {
@@ -22,18 +21,22 @@ class Controller {
                         case 37:
                         case "left-btn":
                             this.model.buttons.left.isPressed = true;
+                            this.model.checkHit("left");
                             break;
                         case 39:
                         case "right-btn":
                             this.model.buttons.right.isPressed = true;
+                            this.model.checkHit("right");
                             break;
                         case 38:
                         case "up-btn":
                             this.model.buttons.up.isPressed = true;
+                            this.model.checkHit("up");
                             break;
                         case 40:
                         case "down-btn":
                             this.model.buttons.down.isPressed = true;
+                            this.model.checkHit("down");
                     }
                     break;
                 case "keyup":
@@ -59,10 +62,7 @@ class Controller {
             }
         };
 
-        $(window).keydown((e) => {
-
-            eventAction(e)
-        });
+        $(window).keydown((e) => eventAction(e));
         $(window).keyup((e) => eventAction(e));
 
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
