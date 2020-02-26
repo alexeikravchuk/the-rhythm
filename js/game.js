@@ -170,6 +170,14 @@ function saveScoreData(name) {
         .catch(errorHandler);
 }
 
-function countDown() {
-    let timer = 4;
+function countdown() {
+    let number = 4;
+    $('.countdown').show();
+    let timer = setInterval(() => {
+        $('.countdown__area').text(--number);
+        if(number === 0) {
+            clearInterval(timer);
+            $('.countdown').hide();
+        }
+    }, 1000)
 }
