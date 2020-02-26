@@ -11,6 +11,7 @@ class Controller {
 
     addListeners() {
         let eventAction = (e) => {
+            if(this.model.isStopped) return;
             let keyAction = e.keyCode || e.target.id;
             //console.log(e.type + ": " + keyAction);
             switch (e.type) {

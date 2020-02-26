@@ -46,10 +46,15 @@ class Model {
         setTimeout(() => {
             this.moveRhythmNodes();
             this.animation();
-        }, 2000);
+        }, 3000);
     }
     pause() {
         this.isStopped = true;
+        localStorage.score = this.score;
+    }
+
+    getScore() {
+        return this.score;
     }
 
     setButtons() {
@@ -57,23 +62,26 @@ class Model {
         let canvasHeight = localStorage["canvas.height"];
         class Button {
             constructor(name, posX, posY) {
+                this.name = name;
                 this.posX = posX;
                 this.posY = posY;
                 this.isPressed = false;
+                this.isHit = false;
                 this.imgUp = this.setBtnImage(name, false);
-                this.imgDown = this.setBtnImage(name, true);
-                this.img = () => this.isPressed ? this.imgDown : this.imgUp;
+                this.imgDownMissed = this.setBtnImage(name, true, false);
+                this.imgDownHit = this.setBtnImage(name, true, true);
+                this.img = () => this.isPressed ? (this.isHit ? this.imgDownHit : this.imgDownMissed) : this.imgUp;
             }
-            setBtnImage(name, isPressed) {
+            setBtnImage(name, isPressed, isHit) {
                 const btnImg = new Image(100, 50);
-                btnImg.src = `./img/arrow-${name}-${isPressed ? 'pressed' : 'default'}.png`;
+                btnImg.src = `./img/arrow-${name}-${isPressed ? (isHit ? 'pressed-hit' : 'pressed') : 'default'}.png`;
                 return btnImg;
             }
         }
         return {
-            left:   new Button("left",  canvasWidth / 8     - 100, canvasHeight - 210),
-            up:     new Button("up",    canvasWidth / 8 * 3 - 100, canvasHeight - 210),
-            down:   new Button("down",  canvasWidth / 8 * 5 - 110, canvasHeight - 210),
+            left:   new Button("left", canvasWidth / 8     - 100, canvasHeight - 210),
+            up:     new Button("up", canvasWidth / 8 * 3 - 100, canvasHeight - 210),
+            down:   new Button("down", canvasWidth / 8 * 5 - 110, canvasHeight - 210),
             right:  new Button("right", canvasWidth / 8 * 7 - 100, canvasHeight - 210)
         }
     };
@@ -133,7 +141,7 @@ class Model {
         class RhythmNode {
             constructor(line, startTime, speed) {
                 this.line = line;
-                this.color = '210,100%,50%';
+                this.color = '50,100%,50%';
                 this.startTime = startTime;
                 this.speed = speed;
                 this.posX = this.setPosX(this.line);
@@ -177,8 +185,8 @@ class Model {
 
         //this function describes the change in the coordinates of nodes.
         const changePosition = node => {
-            node.posY +=  node.speed * 10 + (node.speed * 0.2 * this.level);
-
+            node.posY +=  node.speed + (node.speed * 0.5 * this.level);
+            node.speed *= 1.01;
             switch (node.line) {
                 case 'left':
                     node.posX = canvasWidth * (5 / 16) - canvasWidth * node.posY * (3 / (16 * canvasHeight));
@@ -197,19 +205,22 @@ class Model {
 
     checkHit(line) {
         let canvasHeight = localStorage['canvas.height'];
+        let isHit = false;
         for(let node of this.nodeQueue[line]) {
             if(node.posY > canvasHeight - 200 && node.posY < canvasHeight - 70) {
                 node.color = '120,100%,50%';
                 if(!node.isChecked) {
-                    this.score += 50 + (100 * 0.1 * this.level) ;
-                    console.log("попал");
+                    this.score += 50 + (100 * 0.1 * this.level);
+                    isHit = true;
+                    //console.log("попал");
                 }
                 node.isChecked = true;
             } else if (node.posY > canvasHeight - 70 && !node.isChecked) {
                 node.color = '0,100%,40%';
                 this.score -= 25;
-                console.log("промазал");
+                //console.log("промазал");
             }
         }
+        this.buttons[line].isHit = isHit;
     }
 }

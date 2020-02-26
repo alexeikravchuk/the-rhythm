@@ -7,13 +7,14 @@
 </div>
 <div id="modal">
     <div id="modal-content">
-        <form>
+        <form id="start-form">
             <label id="choice-title" for="track-choice">Choose your Rhythm</label>
+            <br>
             <select name="track" id="track-choice">
                 <option value="phat-sketch">Phat sketch</option>
-                <option value="bass-action" disabled>Bass action</option>
-                <option value="chill-guitar" disabled>Chill guitar</option>
-                <option value="timbre-loopable" disabled>Timbre loop</option>
+                <option value="bass-action">Bass action</option>
+                <option value="chill-guitar">Chill guitar</option>
+                <option value="timbre-loopable">Timbre loop</option>
             </select>
             <br>
             <span>Select a game level</span>
@@ -29,9 +30,20 @@
             <br>
             <a class="start-btn">START</a>
         </form>
+        <form id="save-score-form">
+            <p>You scored <span id="score-result">0</span> points</p><br>
+            <span id="save-question">Do you want to save the result?</span><br>
+            <button class="btn-form" id="no-btn">NO</button>
+            <button class="btn-form" id="yes-btn">YES</button>
+        </form>
+        <form id="ask-nickname-form">
+            <label for="nickname" id="ask-nickname-text">Enter your nickname</label><br>
+            <input type="text" id="nickname" size="40"><br>
+            <button id="confirm-name-btn" class="btn-form">OK</button>
+        </form>
     </div>
 </div>
 <figure>
-    <audio src="">
+    <audio id="audio" src="">
     </audio>
 </figure>
