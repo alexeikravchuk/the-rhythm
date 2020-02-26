@@ -15,8 +15,13 @@ class Controller {
        }
     }
 
+    getNodeWrite() {
+        return this.nodesWrite;
+    }
+
     addListeners() {
         let eventAction = (e) => {
+            e.stopPropagation();
             if(this.model.isStopped) return;
             let keyAction = e.keyCode || e.target.id;
             //console.log(e.type + ": " + keyAction);
@@ -29,21 +34,25 @@ class Controller {
                         case "left-btn":
                             this.model.buttons.left.isPressed = true;
                             this.model.checkHit("left");
+                            this.nodesWrite.left.push(new Date() - this.model.startTime - 4000);
                             break;
                         case 39:
                         case "right-btn":
                             this.model.buttons.right.isPressed = true;
                             this.model.checkHit("right");
+                            this.nodesWrite.right.push(new Date() - this.model.startTime - 4000);
                             break;
                         case 38:
                         case "up-btn":
                             this.model.buttons.up.isPressed = true;
                             this.model.checkHit("up");
+                            this.nodesWrite.up.push(new Date() - this.model.startTime - 4000);
                             break;
                         case 40:
                         case "down-btn":
                             this.model.buttons.down.isPressed = true;
                             this.model.checkHit("down");
+                            this.nodesWrite.down.push(new Date() - this.model.startTime - 4000);
                     }
                     break;
                 case "keyup":

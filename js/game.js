@@ -13,6 +13,10 @@ class Game {
         this.controller.init(this.model, canvas);
         return this;
     }
+    prepare() {
+        this.model.prepare();
+    }
+
     start() {
         this.model.start();
         this.starded = true;
@@ -59,12 +63,16 @@ function startGame() {
         loadAudioData();
         audio.oncanplaythrough = () => {
             modal.fadeOut();
+            countdown();
+            game.prepare();
             playAudio();
-            game.start();
         };
 
         const playAudio = () => {
-            setTimeout(() => audio.play(), 5000);
+            setTimeout(() => {
+                audio.play();
+                game.start();
+            }, 4000);
         }
     };
 
@@ -94,7 +102,7 @@ function startGame() {
         let checkGame = setInterval(() => {
             if(audio.ended) {
                 game.pause();
-                game.score = game.model.score;
+                localStorage.setItem('nodeHistory', JSON.stringify(game.controller.getNodeWrite()));
                 showSaveScoreWindow();
                 console.log('game stopped');
                 clearInterval(checkGame);
@@ -103,6 +111,7 @@ function startGame() {
     };
 }
 
+//displaying a window with an offer to save the result
 function showSaveScoreWindow() {
     $('#modal').fadeIn();
     $('#start-form').hide();
@@ -110,28 +119,32 @@ function showSaveScoreWindow() {
     $('#save-score-form').show();
 }
 
+//if the player refused to save
+$('#no-btn').click((e) => {
+    e.preventDefault();
+    $('#save-score-form').hide();
+    $('#start-form').show();
+
+});
+
+//if the player agreed to save the result
+$('#yes-btn').click((e) => {
+    $('#save-score-form').hide();
+    $('#ask-nickname-form').fadeIn();
+});
+
+$('#nickname').focusin(() => $(window).unbind('keydown')); //delete handlers to enter a name
+$('#nickname').focusout(() => game.controller.addListeners()); // set the key handlers again
+
+//actions if the player agreed to record the result
 $('#confirm-name-btn').click((e) => {
     e.preventDefault();
     $('#ask-nickname-form').hide();
     saveScoreData($('#nickname').val());
     $('#nickname').val('');
     $('#start-form').show();
-    game.controller.addListeners(); // set the key handlers again
 });
 
-$('#no-btn').click((e) => {
-    e.preventDefault();
-    $('#start-form').show();
-    $('#save-score-form').hide();
-});
-
-
-$('#yes-btn').click((e) => {
-    $(document).keydown((e) => $(window).unbind('keydown')); //delete handlers to enter a name
-    e.preventDefault();
-    $('#save-score-form').hide();
-    $('#ask-nickname-form').fadeIn();
-});
 
 //writing the result to google spreadsheets
 function saveScoreData(name) {
@@ -157,3 +170,6 @@ function saveScoreData(name) {
         .catch(errorHandler);
 }
 
+function countDown() {
+    let timer = 4;
+}

@@ -347,3 +347,7 @@ html, body{
 #yes-btn, #no-btn {
     margin: 1rem;
 }
+
+.countdown {
+    display: none;
+}
