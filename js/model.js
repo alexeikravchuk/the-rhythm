@@ -30,8 +30,7 @@ class Model {
         });
     }
 
-    start() {
-        console.log('start game');
+    prepare() {
         this.score = 0;
         this.level = localStorage.level;
         this.isStopped = false;
@@ -40,13 +39,16 @@ class Model {
             left:   new Array(5),
             up:     new Array(5),
             down:   new Array(5),
-            right:  new Array(5)    };
-        this.startTime = new Date();
+            right:  new Array(5)
+        };
         this.updateNodeQueue();
-        setTimeout(() => {
-            this.moveRhythmNodes();
-            this.animation();
-        }, 3000);
+    }
+    start() {
+        console.log('start game');
+        this.startTime = new Date();
+        this.moveRhythmNodes();
+        this.animation();
+
     }
     pause() {
         this.isStopped = true;
@@ -141,7 +143,7 @@ class Model {
         class RhythmNode {
             constructor(line, startTime, speed) {
                 this.line = line;
-                this.color = '50,100%,50%';
+                this.color = '80,100%,50%';
                 this.startTime = startTime;
                 this.speed = speed;
                 this.posX = this.setPosX(this.line);

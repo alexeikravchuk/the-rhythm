@@ -2,8 +2,11 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 80vh;
+    height: 90vh;
     overflow: auto;
+}
+::-webkit-scrollbar {
+    display: none;
 }
 
 table {
@@ -72,7 +75,7 @@ th:last-child {
 }
 
 td {
-    padding: 1rem 1rem;
+    padding: 0.5rem 1rem;
     background: #F8E391;
 }
 
