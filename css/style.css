@@ -337,8 +337,11 @@ html, body{
 }
 
 #nickname {
-    height: 2rem;
+    height: 3rem;
+    font-size: 2rem;
     text-align: center;
+    color: #001273;
+    font-weight: bold;
 }
 
 #yes-btn, #no-btn {
