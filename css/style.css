@@ -10,6 +10,7 @@ html, body{
     font-family: Arial, sans-serif;
     background: black;
     overflow: hidden;
+    font-size: 10px;
 }
 
 .wrapper{
@@ -68,7 +69,7 @@ html, body{
     list-style: none;
     margin: 0 0 0 20px;
 }
-.header_link, .start-btn{
+.header_link, .start-btn, .btn-form{
     display: block;
     color: #fff;
     text-transform: uppercase;
@@ -81,7 +82,7 @@ html, body{
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
-.header_link:hover, .start-btn:hover {
+.header_link:hover, .start-btn:hover, .btn-form:hover {
     animation: swing 2s ease;
     animation-iteration-count: 1;
     text-shadow: 0 0 10px rgb(255, 255, 255);
@@ -270,6 +271,7 @@ html, body{
     margin: 10% auto;
     background: black;
     border: 5px solid #001273;
+    font-size: 2rem;
     width: 90%;
     padding: 5px;
     z-index: 11;
@@ -284,12 +286,22 @@ html, body{
 }
 
 #track-choice {
-    font-size: 20px;
+    font-size: 2rem;
 }
 
-.start-btn {
+.start-btn, .btn-form {
     display: inline-block;
     margin: 10px auto;
+}
+
+.rules__wrapper .start-btn {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .rules__wrapper .start-btn {
+        display: inline-block;
+    }
 }
 
 .level-choice {
@@ -306,15 +318,29 @@ html, body{
         border: 3px solid #001273;
     }
     #modal-content #choice-title {
-        font-size: 20px;
+        font-size: 1.8rem;
     }
 
-    #choose-form, #nickname {
-        font-size: 12px;
-    }
-
-    .start-btn {
+    .start-btn, .btn {
         margin: 10px auto 5px;
-        font-size: 14px ;
+        font-size: 1.4rem ;
     }
+}
+
+#save-score-form, #ask-nickname-form {
+    display: none;
+}
+#score-result {
+    color: #16CAFF;
+    font-weight: bold;
+    font-size: 2.1rem;
+}
+
+#nickname {
+    height: 2rem;
+    text-align: center;
+}
+
+#yes-btn, #no-btn {
+    margin: 1rem;
 }

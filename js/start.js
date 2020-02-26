@@ -1,18 +1,20 @@
 $(document).ready(() => {
     $('.header_burger').click(() => {
         $('.header_burger, .header_menu').toggleClass('active');
-        $('.content').toggleClass('blur')
+        $('.content').toggleClass('blur');
     });
     if(!window.location.hash){
-        window.location.hash = '#main'
+        window.location.hash = '#rules'
     } else loadData(window.location.hash);
 
     $(window).click(e => {
-        if(e.target === $('.content')[0]) {
+        if(e.target === $('.content')[0]
+            || e.target === $('#modal')[0]
+            || e.target === $('#form')[0]) {
             $('.header_burger, .header_menu').removeClass('active');
             $('.content').removeClass('blur')
         }
-    })
+    });
 });
 
 //download content according to the hash
@@ -32,8 +34,8 @@ function loadData(URLHash) {
         case "#about":
             url += "about.html";
             break;
-        case "#main":
-            url += "main.html";
+        case "#rules":
+            url += "rules.html";
             break;
         default:
             url += 'highscores.html'
@@ -54,16 +56,16 @@ function dataLoaded(data) {
     const gameContainer = $('#game_container');
     const pageContainer = $('#page_container');
     if(window.location.hash === '#game') {
-        pageContainer.css('display', 'none');
-        gameContainer.css('display', 'block');
+        pageContainer.hide();
+        gameContainer.show();
         if(!isLoadedGame) {
             gameContainer.html(data);
             isLoadedGame = true;
-            loadGame();
+            loadGameScript();
         }
     } else {
-        gameContainer.css('display', 'none');
-        pageContainer.css('display', 'block');
+        gameContainer.hide();
+        pageContainer.show();
         pageContainer.html(data);
     }
 }
@@ -72,7 +74,7 @@ function errorHandler(e) {
     console.log("Error" + e)
 }
 
-function loadGame() {
+function loadGameScript() {
     const scriptNameArray = ['model', 'view', 'controller', 'game'];
     scriptNameArray.forEach(addScript);
 
@@ -81,8 +83,6 @@ function loadGame() {
         script.src = `js/${name}.js`;
         script.id = `${name}_script`;
         script.async = false; // to guarantee order
-        document.head.appendChild(script);
+        document.body.appendChild(script);
     }
-
 }
-
