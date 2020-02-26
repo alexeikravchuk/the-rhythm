@@ -7,23 +7,38 @@
 }
 
 table {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     font-size: 2rem;
     border-radius: 10px;
     border-spacing: 0;
     text-align: center;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 570px) {
     table {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
+    }
+    td {
+        padding: 0.3rem;
     }
 }
-@media (max-width: 470px) {
+@media (max-width: 430px) {
     table {
-        font-size: 0.6em;
+        font-size: 1.2em;
+    }
+    td {
+        padding: 0.2rem;
     }
 }
+@media (max-width: 360px) {
+    table {
+        font-size: 1em;
+    }
+    td {
+        padding: 0.1rem;
+    }
+}
+
 .table_name {
     font-size: 3rem;
     font-weight: bold;
@@ -57,7 +72,7 @@ th:last-child {
 }
 
 td {
-    padding: 10px 20px;
+    padding: 1rem 1rem;
     background: #F8E391;
 }
 

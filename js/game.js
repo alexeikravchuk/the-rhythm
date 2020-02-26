@@ -138,7 +138,7 @@ function saveScoreData(name) {
     const scoreScript = "https://script.google.com/macros/s/AKfycbzigfbGe5K0N8eg4HMqE_W8ttwpwCN_LYESR4dwNsTQJTs5e2Y/exec";
     let track = $('#track-choice')[0].value;
     let level = $('.level-choice input:checked').val();
-    let scoreNumber = 1 + localStorage.scoreNumber;
+    let scoreNumber = localStorage.scoreNumber;
     localStorage.scoreNumber = ++scoreNumber;
     let data = `${scoreNumber},${name},${localStorage.score},${track},${level}`;
     fetch(scoreScript, {

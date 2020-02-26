@@ -7,6 +7,12 @@ class Controller {
        this.model = model;
        this.canvas = canvas;
        this.addListeners();
+       this.nodesWrite = {
+           left: [],
+           up: [],
+           down: [],
+           right: []
+       }
     }
 
     addListeners() {
