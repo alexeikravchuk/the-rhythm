@@ -9,11 +9,6 @@ class Model {
         this.buttons = this.setButtons();
         this.rhythmLines = this.setRhythmLines();
         this.nodes = {left:[],up:[],down:[],right:[]};
-        this.nodeQueue = {
-            left:   new Array(5),
-            up:     new Array(5),
-            down:   new Array(5),
-            right:  new Array(5)    };
         this.update();
     }
 
@@ -48,7 +43,6 @@ class Model {
         this.startTime = new Date();
         this.moveRhythmNodes();
         this.animation();
-
     }
     pause() {
         this.isStopped = true;
@@ -119,7 +113,7 @@ class Model {
     setRhythmLines() {
         let canvasWidth = localStorage['canvas.width'];
         let canvasHeight = localStorage['canvas.height'];
-        const startColor = '255,255,255';
+        const startColor = '150,150,150';
         class RhythmLine {
             constructor(sX, sY, eX, eY, color) {
                 this.startX = sX;
@@ -208,21 +202,28 @@ class Model {
     checkHit(line) {
         let canvasHeight = localStorage['canvas.height'];
         let isHit = false;
-        for(let node of this.nodeQueue[line]) {
+
+        for (let node of this.nodeQueue[line]) {
             if(node.posY > canvasHeight - 200 && node.posY < canvasHeight - 70) {
                 node.color = '120,100%,50%';
                 if(!node.isChecked) {
-                    this.score += 50 + (100 * 0.1 * this.level);
                     isHit = true;
-                    //console.log("попал");
+                    //console.log("hit");
                 }
                 node.isChecked = true;
             } else if (node.posY > canvasHeight - 70 && !node.isChecked) {
                 node.color = '0,100%,40%';
-                this.score -= 25;
-                //console.log("промазал");
+                this.score -= 5;
+                //console.log("missed");
             }
         }
+        this.score += isHit ? Math.floor(50 * (1 + 0.1 * this.level)) : -10;
         this.buttons[line].isHit = isHit;
+        this.highlightline(line, isHit);
+    }
+
+    highlightline(line, isHit) {
+        this.rhythmLines[line].color = isHit ? '150,255,150' : '255,150,150';
+        setTimeout(() => this.rhythmLines[line].color = '150,150,150', 300);
     }
 }

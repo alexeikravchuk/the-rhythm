@@ -20,12 +20,18 @@
             <span>Select a game level</span>
             <br>
             <div class="level-choice">
-                <input type="radio" id="level-1" name="level" value="1" checked>
-                <label for="level-1">Easy</label>
-                <input type="radio" id="level-2" name="level" value="2">
-                <label for="level-2">Middle</label>
-                <input type="radio" id="level-3" name="level" value="3">
-                <label for="level-3">Hard</label>
+                <div class="start-form__level">
+                    <input type="radio" id="level-1" name="level" value="1" checked>
+                    <label for="level-1">Easy</label>
+                </div>
+                <div class="start-form__level">
+                    <input type="radio" id="level-2" name="level" value="2">
+                    <label for="level-2">Middle</label>
+                </div>
+                <div class="start-form__level">
+                    <input type="radio" id="level-3" name="level" value="3">
+                    <label for="level-3">Hard</label>
+                </div>
             </div>
             <br>
             <a class="start-btn">START</a>
@@ -38,7 +44,7 @@
         </form>
         <form id="ask-nickname-form">
             <label for="nickname" id="ask-nickname-text">Enter your nickname</label><br>
-            <input type="text" id="nickname" size="20"><br>
+            <input type="text" id="nickname"><br>
             <button id="confirm-name-btn" class="btn-form">OK</button>
         </form>
     </div>

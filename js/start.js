@@ -1,20 +1,19 @@
 $(document).ready(() => {
-    $('.header_burger').click(() => {
-        $('.header_burger, .header_menu').toggleClass('active');
-        $('.content').toggleClass('blur');
-    });
-    if(!window.location.hash){
-        window.location.hash = '#rules'
-    } else loadData(window.location.hash);
+  $('.header_burger').click(() => {
+    $('.header_burger, .header_menu').toggleClass('active');
+    $('.content').toggleClass('blur');
+  });
 
-    $(window).click(e => {
-        if(e.target === $('.content')[0]
-            || e.target === $('#modal')[0]
-            || e.target === $('#form')[0]) {
-            $('.header_burger, .header_menu').removeClass('active');
-            $('.content').removeClass('blur')
-        }
-    });
+  if(!window.location.hash){
+    window.location.hash = '#rules'
+  } else loadData(window.location.hash);
+
+  $(window).click(e => {
+    if (e.target === $('.header_menu')[0] || e.target.href) {
+      $('.header_burger, .header_menu').removeClass('active');
+      $('.content').removeClass('blur')
+    }
+  });
 });
 
 //download content according to the hash
