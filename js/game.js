@@ -56,6 +56,8 @@ $( window ).resize(function() {
 
 const game = new Game().init(canvas);
 
+updateScoreNumber();
+
 $(document).ready(startGame());
 
 function startGame() {
@@ -101,7 +103,7 @@ function startGame() {
         localStorage.setItem('level', level);
 
         //getting nodes from the "json" file and writing to the localStorage
-        $.ajax(`audio/${track}.json`, {
+        $.ajax(`audio/${track}-${level}.json`, {
             type:'GET',
             dataType:'text',
             success: data => localStorage.setItem('nodes', data),
@@ -117,7 +119,7 @@ function startGame() {
             audio.src = '';
         });
 
-        //check the status of the game every 1 sec
+        //check the status of the game every 0.2 sec
         let checkGame = setInterval(() => {
             if (audio.ended) {
                 game.pause();
@@ -209,8 +211,15 @@ function countdown() {
 }
 
 function checkPageVisibility() {
-    if(document.hidden) {
+    if(document.hidden || document.mozHidden) {
         game.pause();
         $('#modal').fadeIn();
     }
+}
+
+function updateScoreNumber() {
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbzigfbGe5K0N8eg4HMqE_W8ttwpwCN_LYESR4dwNsTQJTs5e2Y/exec";
+    fetch(scriptUrl)
+        .then(response => response.json())
+        .then(data => localStorage.setItem("scoreNumber", data.result.length));
 }
