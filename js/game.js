@@ -29,12 +29,30 @@ class Game {
 }
 
 const canvas = $('.myCanvas')[0];
+setCanvasSize();
 
-canvas.width = 900;
-canvas.height = 1200;
+function setCanvasSize() {
+    let availHeight = window.screen.availHeight;
+    let availWidth = window.screen.availWidth;
+    if(availWidth >= availHeight) {
+        canvas.width = 900;
+        canvas.height = 1000;
+    } else {
+        canvas.width = 900;
+        canvas.height = 1400;
+    }
+    localStorage.setItem('canvas.width', canvas.width);
+    localStorage.setItem('canvas.height', canvas.height);
+}
 
-localStorage.setItem('canvas.width', canvas.width);
-localStorage.setItem('canvas.height', canvas.height);
+$( window ).resize(function() {
+    game.pause();
+    $('#modal').fadeIn();
+    setCanvasSize();
+    game.init(canvas);
+    startGame();
+    console.log('resize')
+});
 
 const game = new Game().init(canvas);
 
@@ -96,18 +114,22 @@ function startGame() {
         $('a.header_link').click(e => {
             audio.pause();
             game.pause();
+            audio.src = '';
         });
 
         //check the status of the game every 1 sec
         let checkGame = setInterval(() => {
-            if(audio.ended) {
+            if (audio.ended) {
                 game.pause();
                 localStorage.setItem('nodeHistory', JSON.stringify(game.controller.getNodeWrite()));
                 showSaveScoreWindow();
                 console.log('game stopped');
                 clearInterval(checkGame);
+            } else if (!game.starded) {
+                audio.pause();
             }
-        }, 1000);
+            checkPageVisibility();
+        }, 200);
     };
 }
 
@@ -178,6 +200,14 @@ function countdown() {
         if(number === 0) {
             clearInterval(timer);
             $('.countdown').hide();
+            $('.countdown__area').text(4);
         }
     }, 1000)
+}
+
+function checkPageVisibility() {
+    if(document.hidden) {
+        game.pause();
+        $('#modal').fadeIn();
+    }
 }

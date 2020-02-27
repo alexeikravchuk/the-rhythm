@@ -29,9 +29,9 @@ class View {
             const startColor = this.model.rhythmLines[key].color;
 
             let grad = this.ctx.createLinearGradient(startX,startY, endX,endY);
-            grad.addColorStop(0, `rgba(${startColor},0.5)`);
-            grad.addColorStop(0.7,`rgba(${startColor},0.05)`);
-            grad.addColorStop(1,`rgba(${startColor},0.01)`);
+            grad.addColorStop(0, `rgba(${startColor},0.7)`);
+            grad.addColorStop(0.7,`rgba(${startColor},0.1)`);
+            grad.addColorStop(1,`rgba(${startColor},0.05)`);
             this.ctx.fillStyle = grad;
 
             this.ctx.beginPath();
