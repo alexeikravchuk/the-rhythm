@@ -151,6 +151,8 @@ $('#no-btn').click((e) => {
 
 //if the player agreed to save the result
 $('#yes-btn').click((e) => {
+    e.preventDefault();
+    e.stopPropagation();
     $('#save-score-form').hide();
     $('#ask-nickname-form').fadeIn();
 });
@@ -161,6 +163,7 @@ $('#nickname').focusout(() => game.controller.addListeners()); // set the key ha
 //actions if the player agreed to record the result
 $('#confirm-name-btn').click((e) => {
     e.preventDefault();
+    e.stopPropagation();
     $('#ask-nickname-form').hide();
     saveScoreData($('#nickname').val());
     $('#nickname').val('');
