@@ -89,12 +89,14 @@ class Controller {
         $(window).keydown((e) => eventAction(e));
         $(window).keyup((e) => eventAction(e));
 
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        //     document.ontouchstart = (e) => eventAction(e);
+        //     document.ontouchend = (e) => eventAction(e);
+        // } else {
             document.ontouchstart = (e) => eventAction(e);
             document.ontouchend = (e) => eventAction(e);
-        } else {
             $(window).mousedown((e) => eventAction(e));
             $(window).mouseup((e) => eventAction(e));
-        }
+        // }
     }
 }
