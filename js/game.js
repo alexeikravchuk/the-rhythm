@@ -122,12 +122,17 @@ function startGame() {
 
         //
         $('a.header_link').click(e => {
+            resetGame();
+        });
+
+        function resetGame() {
             audio.pause();
             game.pause();
+            audio.src = '';
             modalContent.show();
             loadingAnimation.hide();
-            audio.src = '';
-        });
+            resetCountdown();
+        }
 
         //check the status of the game every 0.2 sec
         let checkGame = setInterval(() => {
@@ -139,9 +144,11 @@ function startGame() {
                 clearInterval(checkGame);
             } else if (!game.starded) {
                 audio.pause();
+            } else if(window.location.hash !== '#game') {
+                resetGame();
             }
             checkPageVisibility();
-        }, 200);
+        }, 50);
     };
 }
 
@@ -177,15 +184,17 @@ $('#confirm-name-btn').click((e) => {
     e.preventDefault();
     e.stopPropagation();
 
+    let nickname = $('#nickname').val().split();
     //nickname lite validation
-    if($('#nickname:invalid')[0] || $('#nickname').val().length < 3) {
+
+    if($('#nickname:invalid')[0] || nickname.length < 3) {
         $('#nickname').val('');
-        $('#nickname')[0].setAttribute('placeholder', 'min length 3 characters');
+        $('#nickname')[0].setAttribute('placeholder', 'min 3 letters or numbers');
         return;
     }
 
     $('#ask-nickname-form').hide();
-    saveScoreData($('#nickname').val());
+    saveScoreData(nickname);
     $('#nickname').val('');
     $('#start-form').show();
 });
@@ -215,17 +224,22 @@ function saveScoreData(name) {
         .catch(errorHandler);
 }
 
+let resetCountdown;
 function countdown() {
     let number = 4;
     $('.countdown').show();
-    let timer = setInterval(() => {
+    timer = setInterval(() => {
         $('.countdown__area').text(--number);
         if(number === 0) {
-            clearInterval(timer);
-            $('.countdown').hide();
-            $('.countdown__area').text(4);
+            resetCountdown()
         }
-    }, 1000)
+    }, 1000);
+
+    resetCountdown = function () {
+        clearInterval(timer);
+        $('.countdown').hide();
+        $('.countdown__area').text(4);
+    }
 }
 
 function checkPageVisibility() {

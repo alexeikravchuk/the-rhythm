@@ -338,7 +338,7 @@ html, body{
 
 #nickname {
     height: 3rem;
-    font-size: 2rem;
+    font-size: 1.8rem;
     text-align: center;
     color: #001273;
     font-weight: bold;
@@ -349,6 +349,7 @@ html, body{
     border: 1px solid red;
     box-shadow: 0 0 5px 1px red;
 }
+
 #nickname:focus:invalid {
     outline: none;
 }

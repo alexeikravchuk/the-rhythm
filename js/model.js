@@ -20,6 +20,7 @@ class Model {
 
     animation() {
         requestAnimationFrame(() => {
+            if (this.score < 0) this.score = 0;
             this.view.updateView();
             if(!this.isStopped) this.animation();
         });
@@ -238,7 +239,6 @@ class Model {
                 factor = 7;
         }
         this.score += isHit ? (10 * factor) : -10;
-        if (this.score < 0) this.score = 0;
         this.buttons[line].isHit = isHit;
         this.highlightline(line, isHit);
     }
