@@ -35,28 +35,28 @@ class Controller {
                         case "left-btn":
                             this.model.buttons.left.isPressed = true;
                             this.model.checkHit("left");
-                            this.nodesWrite.left.push(new Date() - this.model.startTime - 2680);
+                            this.nodesWrite.left.push(new Date() - this.model.startTime - 3080);
                             break;
                         case 39:
                         case 70:
                         case "right-btn":
                             this.model.buttons.right.isPressed = true;
                             this.model.checkHit("right");
-                            this.nodesWrite.right.push(new Date() - this.model.startTime - 2680);
+                            this.nodesWrite.right.push(new Date() - this.model.startTime - 3080);
                             break;
                         case 38:
                         case 83:
                         case "up-btn":
                             this.model.buttons.up.isPressed = true;
                             this.model.checkHit("up");
-                            this.nodesWrite.up.push(new Date() - this.model.startTime - 2680);
+                            this.nodesWrite.up.push(new Date() - this.model.startTime - 3080);
                             break;
                         case 40:
                         case 68:
                         case "down-btn":
                             this.model.buttons.down.isPressed = true;
                             this.model.checkHit("down");
-                            this.nodesWrite.down.push(new Date() - this.model.startTime - 2680);
+                            this.nodesWrite.down.push(new Date() - this.model.startTime - 3080);
                     }
                     break;
                 case "keyup":

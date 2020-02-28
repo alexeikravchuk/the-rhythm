@@ -117,7 +117,7 @@ class Model {
                 }
             }
             //console.log(this.nodeQueue);
-        }, 50);
+        }, 1000/60);
     }
 
     setRhythmLines() {
