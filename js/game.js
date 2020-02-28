@@ -67,6 +67,7 @@ function startGame() {
     const audio = $("#audio")[0];
     const modalContent = $('#modal-content');
     const loadingAnimation = $('#loading');
+    let audioTimer;
 
     $('a.header_link, .header_logo').click(e => {
         game.pause();
@@ -88,16 +89,16 @@ function startGame() {
     function run () {
         loadAudioData();
         audio.oncanplaythrough = () => {
-            loadingAnimation.fadeOut();
+            loadingAnimation.hide();
             modal.fadeOut();
-            setInterval(() => modalContent.show(), 500);
+            setInterval(() => modalContent.show(), 100);
             countdown();
             game.prepare();
             playAudio();
         };
 
         const playAudio = () => {
-            setTimeout(() => {
+            audioTimer = setTimeout(() => {
                 audio.play();
                 game.start();
             }, 4000);
@@ -128,7 +129,7 @@ function startGame() {
         function resetGame() {
             audio.pause();
             game.pause();
-            audio.src = '';
+            clearTimeout(audioTimer);
             modal.show();
             loadingAnimation.hide();
             resetCountdown();
@@ -245,7 +246,7 @@ function countdown() {
     resetCountdown = function () {
         clearInterval(timer);
         $('.countdown').hide();
-        $('.countdown__area').text(4);
+        $('.countdown__area').text("");
     }
 }
 
