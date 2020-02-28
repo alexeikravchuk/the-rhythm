@@ -1,4 +1,9 @@
 $(document).ready(() => {
+    const loadingAnimation = $('#loading');
+    loadingAnimation.show();
+
+    $(window).on('hashchange',() => loadingAnimation.hide());
+
     let scores = [];
 
     const scriptUrl = "https://script.google.com/macros/s/AKfycbzigfbGe5K0N8eg4HMqE_W8ttwpwCN_LYESR4dwNsTQJTs5e2Y/exec";
@@ -24,6 +29,7 @@ $(document).ready(() => {
     }
 
     function buildTable() {
+        loadingAnimation.hide();
         let tbody = $('.table_body');
         let place = 1;
         for(let score of scores) {
