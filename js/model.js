@@ -76,10 +76,10 @@ class Model {
             }
         }
         return {
-            left:   new Button("left", canvasWidth / 8     - 100, canvasHeight - 210),
-            up:     new Button("up", canvasWidth / 8 * 3 - 100, canvasHeight - 210),
-            down:   new Button("down", canvasWidth / 8 * 5 - 110, canvasHeight - 210),
-            right:  new Button("right", canvasWidth / 8 * 7 - 100, canvasHeight - 210)
+            left:   new Button("left", canvasWidth / 8     - 100, canvasHeight - 190),
+            up:     new Button("up", canvasWidth / 8 * 3 - 100, canvasHeight - 190),
+            down:   new Button("down", canvasWidth / 8 * 5 - 110, canvasHeight - 190),
+            right:  new Button("right", canvasWidth / 8 * 7 - 100, canvasHeight - 190)
         }
     };
 

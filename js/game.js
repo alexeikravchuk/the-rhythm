@@ -129,7 +129,7 @@ function startGame() {
             audio.pause();
             game.pause();
             audio.src = '';
-            modalContent.show();
+            modal.show();
             loadingAnimation.hide();
             resetCountdown();
         }
@@ -145,6 +145,13 @@ function startGame() {
             } else if (!game.starded) {
                 audio.pause();
             } else if(window.location.hash !== '#game') {
+                resetGame();
+            } else if(!window.navigator.onLine) {
+                $('#start-form').hide();
+                modalContent.append(
+                    `<div style="color: darkred">
+                        Connection is lost. Reload the page.
+                    </div>`);
                 resetGame();
             }
             checkPageVisibility();
@@ -184,12 +191,12 @@ $('#confirm-name-btn').click((e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    let nickname = $('#nickname').val().split();
+    let nickname = $('#nickname').val().trim();
     //nickname lite validation
 
     if($('#nickname:invalid')[0] || nickname.length < 3) {
         $('#nickname').val('');
-        $('#nickname')[0].setAttribute('placeholder', 'min 3 letters or numbers');
+        $('#nickname')[0].setAttribute('placeholder', 'min 3 letters or digits');
         return;
     }
 
