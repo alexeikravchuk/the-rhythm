@@ -51,6 +51,7 @@ $( window ).resize(function() {
     setCanvasSize();
     game.init(canvas);
     startGame();
+    game.model.update();
     console.log('resize')
 });
 
@@ -67,7 +68,7 @@ function startGame() {
     const modalContent = $('#modal-content');
     const loadingAnimation = $('#loading');
 
-    $('a.header_link').click(e => {
+    $('a.header_link, .header_logo').click(e => {
         game.pause();
         $('#modal').fadeIn();
     });
@@ -75,6 +76,7 @@ function startGame() {
     modal.click(e => {
         if (e.target === startBtn) {
             e.preventDefault();
+            game.model.update();
             run();
             modalContent.fadeOut();
             loadingAnimation.fadeIn();
@@ -83,7 +85,7 @@ function startGame() {
 
     $(window).keydown(e => (e.keyCode === 13) && run());
 
-    const run = e => {
+    function run () {
         loadAudioData();
         audio.oncanplaythrough = () => {
             loadingAnimation.fadeOut();
@@ -100,7 +102,7 @@ function startGame() {
                 game.start();
             }, 4000);
         }
-    };
+    }
 
     const loadAudioData = () => {
         let track = $('#track-choice')[0].value;

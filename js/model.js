@@ -105,9 +105,11 @@ class Model {
                         if(!rhythmNode) i--;
                     }
 
-                    if(rhythmNode.posY > 850 && rhythmNode.posY < 870) {
-                         console.log(new Date() - this.startTime - rhythmNode.startTime);
-                    }
+
+                    //this code for determining the ball’s flight time.
+                    // if(rhythmNode.posY > 850 && rhythmNode.posY < 870) {
+                    //      console.log(new Date() - this.startTime - rhythmNode.startTime);
+                    // }
 
                     //clear timer if node list is empty or if game stopped
                     if(!this.nodes || this.isStopped) clearInterval(updateNodeTimer);
@@ -235,7 +237,8 @@ class Model {
             case '3':
                 factor = 7;
         }
-        this.score += isHit ? 10 * factor : 10;
+        this.score += isHit ? (10 * factor) : -10;
+        if (this.score < 0) this.score = 0;
         this.buttons[line].isHit = isHit;
         this.highlightline(line, isHit);
     }
