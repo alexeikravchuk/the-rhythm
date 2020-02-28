@@ -446,7 +446,7 @@ html, body{
 .about__audio, .about__contacts {
     margin: 2rem 0 0 2rem;
 }
-ul li {
+.about__audio ul li {
     font-style: italic;
 }
 
