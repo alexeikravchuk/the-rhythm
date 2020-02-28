@@ -95,6 +95,7 @@ class Model {
                     // if the position is empty or the node leaves the canvas,
                     // remove the node from the beginning of the stack and add the next node
                     if(!rhythmNode || rhythmNode.posY > canvasHeight) {
+                        if(rhythmNode && !rhythmNode.isChecked) this.score -= 15;
                         this.nodeQueue[line].shift();
                         nodeTime = this.nodes[line].shift();
                         let speed = 1;
@@ -104,12 +105,16 @@ class Model {
                         if(!rhythmNode) i--;
                     }
 
+                    if(rhythmNode.posY > 850 && rhythmNode.posY < 870) {
+                         console.log(new Date() - this.startTime - rhythmNode.startTime);
+                    }
+
                     //clear timer if node list is empty or if game stopped
                     if(!this.nodes || this.isStopped) clearInterval(updateNodeTimer);
                 }
             }
             //console.log(this.nodeQueue);
-        }, 200);
+        }, 50);
     }
 
     setRhythmLines() {
@@ -230,7 +235,7 @@ class Model {
             case '3':
                 factor = 7;
         }
-        this.score += isHit ? 10 * factor : -10;
+        this.score += isHit ? 10 * factor : 10;
         this.buttons[line].isHit = isHit;
         this.highlightline(line, isHit);
     }

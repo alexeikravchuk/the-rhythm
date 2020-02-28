@@ -192,7 +192,7 @@ $('#confirm-name-btn').click((e) => {
 //writing the result to google spreadsheets
 function saveScoreData(name) {
     const scoreScript = "https://script.google.com/macros/s/AKfycbzigfbGe5K0N8eg4HMqE_W8ttwpwCN_LYESR4dwNsTQJTs5e2Y/exec";
-    let track = $('#track-choice')[0].value;
+    let track = $("#track-choice option:selected").text();
     let level = $('.level-choice input:checked').val();
     let scoreNumber = localStorage.scoreNumber;
     localStorage.scoreNumber = ++scoreNumber;
