@@ -5,8 +5,13 @@
     height: 90vh;
     overflow: auto;
 }
-::-webkit-scrollbar {
-    display: none;
+.wrapper::-webkit-scrollbar {
+    display: none; /* chrome based */
+}
+
+.wrapper {
+    -ms-overflow-style: none;  /* IE 10+ */
+    scrollbar-width: none; /* Firefox */
 }
 
 table {
@@ -15,6 +20,7 @@ table {
     border-radius: 10px;
     border-spacing: 0;
     text-align: center;
+    z-index: 2;
 }
 
 @media (max-width: 570px) {

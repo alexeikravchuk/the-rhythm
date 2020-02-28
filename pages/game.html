@@ -1,4 +1,5 @@
 <canvas class="myCanvas"></canvas>
+<link rel="stylesheet" href="css/loading-animation.css">
 <div class="buttons">
     <span class="btn" id="left-btn"></span>
     <span class="btn" id="up-btn"></span>
@@ -45,9 +46,20 @@
         </form>
         <form id="ask-nickname-form">
             <label for="nickname" id="ask-nickname-text">Enter your nickname</label><br>
-            <input type="text" id="nickname"><br>
+            <input type="text" id="nickname" required minlength="3" maxlength="15" pattern="[A-Za-z1-9]{3,15}"><br>
             <button id="confirm-name-btn" class="btn-form">OK</button>
         </form>
+    </div>
+    <div id="loading">
+        <div class="loading__text">LOADING</div>
+        <div id="loadingG_1" class="loadingG"></div>
+        <div id="loadingG_2" class="loadingG"></div>
+        <div id="loadingG_3" class="loadingG"></div>
+        <div id="loadingG_4" class="loadingG"></div>
+        <div id="loadingG_5" class="loadingG"></div>
+        <div id="loadingG_6" class="loadingG"></div>
+        <div id="loadingG_7" class="loadingG"></div>
+        <div id="loadingG_8" class="loadingG"></div>
     </div>
 </div>
 <figure>

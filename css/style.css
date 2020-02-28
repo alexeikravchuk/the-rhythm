@@ -248,7 +248,7 @@ html, body{
     }
 }
 
-
+/*modal and form styles*/
 #modal {
     position: absolute;
     display: flex;
@@ -275,6 +275,7 @@ html, body{
     line-height: 30px;
     text-align: center;
 }
+
 #modal-content #choice-title {
     text-transform: uppercase;
     margin: 10px auto;
@@ -291,9 +292,7 @@ html, body{
     margin: 10px auto;
 }
 
-.rules__wrapper .start-btn {
-    display: none;
-}
+
 
 @media (max-width: 767px) {
     .rules__wrapper .start-btn {
@@ -346,6 +345,17 @@ html, body{
     max-width: 80%;
 }
 
+#nickname:invalid {
+    border: 1px solid red;
+    box-shadow: 0 0 5px 1px red;
+}
+#nickname:focus:invalid {
+    outline: none;
+}
+#nickname:valid {
+    border: 2px solid black;
+}
+
 #yes-btn, #no-btn {
     margin: 1rem;
 }
@@ -361,3 +371,75 @@ html, body{
     font-size: 15rem;
     z-index: 20;
 }
+
+/*rules style*/
+.rules__wrapper {
+    margin: 2rem;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    max-width: 800px;
+    font-size: 2rem;
+    color: #000a3b;
+    background-color: #F8E391;
+    padding: 2rem;
+    border-radius: 1rem;
+    overflow: auto;
+}
+
+.rules__wrapper ul, li {
+    margin: 1rem 0 0 2rem;
+    list-style: none;
+}
+
+.title {
+    display: block;
+    text-align: center;
+    font-size: 4rem;
+    color: #1D9AF2;
+}
+.rules__welcome {
+    text-align: center;
+}
+
+@media (max-width: 620px) {
+    .rules__wrapper {
+        font-size: 1.8rem;
+        padding: 1.7rem;
+        margin: 1rem;
+    }
+    .rules__wrapper ul, li {
+        margin: 1rem 0 0 1.5rem;
+    }
+}
+@media (max-width: 430px) {
+    .rules__wrapper {
+        font-size: 1.7rem;
+        padding: 0.5rem;
+        margin: 0.5rem;
+    }
+    .rules__wrapper ul, li {
+        margin: 0.5rem 0 0 0.5rem;
+    }
+    .title {
+        font-size: 2.5rem;
+    }
+}
+
+/*style about*/
+.about{
+    margin: 2rem;
+}
+.about .title  {
+    display: block;
+    text-align: center;
+    font-size: 3rem;
+    color: #1D9AF2;
+}
+.about__wrapper {
+    font-size: 2rem;
+    color: #000a3b;
+    background-color: #F8E391;
+    border-radius: 1rem;
+    padding: 1rem;
+    max-width: 800px;
+}
+

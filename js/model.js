@@ -9,7 +9,7 @@ class Model {
         this.buttons = this.setButtons();
         this.rhythmLines = this.setRhythmLines();
         this.nodes = {left:[],up:[],down:[],right:[]};
-        this.update();
+        window.onload = this.update();
     }
 
     update(){
@@ -97,7 +97,9 @@ class Model {
                     if(!rhythmNode || rhythmNode.posY > canvasHeight) {
                         this.nodeQueue[line].shift();
                         nodeTime = this.nodes[line].shift();
-                        rhythmNode = this.createRhythmNode(line, nodeTime, 1);
+                        let speed = 1;
+                        if(localStorage['canvas.height'] === '1400')  speed = 1.45;
+                        rhythmNode = this.createRhythmNode(line, nodeTime, speed);
                         this.nodeQueue[line].push(rhythmNode);
                         if(!rhythmNode) i--;
                     }
@@ -204,7 +206,7 @@ class Model {
         let isHit = false;
 
         for (let node of this.nodeQueue[line]) {
-            if(node.posY > canvasHeight - 200 && node.posY < canvasHeight - 70) {
+            if(node.posY > canvasHeight - 220 && node.posY < canvasHeight - 70) {
                 node.color = '120,100%,50%';
                 if(!node.isChecked) {
                     isHit = true;
@@ -217,7 +219,18 @@ class Model {
                 //console.log("missed");
             }
         }
-        this.score += isHit ? Math.floor(50 * (1 + 0.1 * this.level)) : -10;
+        let factor = 0;
+        switch (this.level) {
+            case '1':
+                factor = 5;
+                break;
+            case '2':
+                factor = 6;
+                break;
+            case '3':
+                factor = 7;
+        }
+        this.score += isHit ? 10 * factor : -10;
         this.buttons[line].isHit = isHit;
         this.highlightline(line, isHit);
     }
