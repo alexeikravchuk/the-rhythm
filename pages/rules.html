@@ -1,8 +1,31 @@
-
 <div class="rules">
+  <h1 class="title">THE RHYTHM</h1>
   <div class="rules__wrapper wrapper">
-    <h1>THE RHYTHM</h1>
+    <section class="rules__welcome">
+      <p>
+        I welcome you to the game "<strong>THE RHYTHM</strong>"<br>
+        I wish you a pleasant time! Find your rhythm and enjoy<br>
+        Click <a href="#game" class="start-btn">PLAY</a> to start the game.
+      </p>
+    </section>
+    <section class="rules__description">
+      <ul>
+        <li>Press the button when the rhythm-ball is under the button.</li>
+        <li>Depending on the level, for each correct hit you will receive <strong>50</strong>
+          points at the first level, <strong>60</strong> points at the second level and
+          <strong>70</strong> points at the third level.</li>
+        <li>The higher the level of the game, the higher the speed of movement of the rhythm balls.</li>
+      </ul>
+    </section>
 
-    <a href="#game" class="start-btn">PLAY</a>
   </div>
 </div>
+
+<script>
+  if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile |Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent))) {
+    $(".rules__description ul").append(`<li>
+      For the game you can use the arrows <strong>⬅</strong>, <strong>⬆</strong>, <strong>⬇</strong>, <strong>➡</strong>
+      on the keyboard or the letters <strong>A</strong>, <strong>S</strong>, <strong>D</strong>, <strong>F</strong>
+    </li>`);
+  }
+</script>

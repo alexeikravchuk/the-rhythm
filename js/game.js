@@ -58,12 +58,14 @@ const game = new Game().init(canvas);
 
 updateScoreNumber();
 
-$(document).ready(startGame());
+document.onload = startGame();
 
 function startGame() {
     const modal = $('#modal');
-    const startBtn = $('.start-btn');
+    const startBtn = $('.start-btn')[0];
     const audio = $("#audio")[0];
+    const modalContent = $('#modal-content');
+    const loadingAnimation = $('#loading');
 
     $('a.header_link').click(e => {
         game.pause();
@@ -71,9 +73,11 @@ function startGame() {
     });
 
     modal.click(e => {
-        if (e.target === startBtn[0]) {
+        if (e.target === startBtn) {
             e.preventDefault();
             run();
+            modalContent.fadeOut();
+            loadingAnimation.fadeIn();
         }
     });
 
@@ -82,7 +86,9 @@ function startGame() {
     const run = e => {
         loadAudioData();
         audio.oncanplaythrough = () => {
+            loadingAnimation.fadeOut();
             modal.fadeOut();
+            setInterval(() => modalContent.show(), 500);
             countdown();
             game.prepare();
             playAudio();
@@ -116,6 +122,8 @@ function startGame() {
         $('a.header_link').click(e => {
             audio.pause();
             game.pause();
+            modalContent.show();
+            loadingAnimation.hide();
             audio.src = '';
         });
 
@@ -166,6 +174,14 @@ $('#nickname').focusout(() => game.controller.addListeners()); // set the key ha
 $('#confirm-name-btn').click((e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    //nickname lite validation
+    if($('#nickname:invalid')[0] || $('#nickname').val().length < 3) {
+        $('#nickname').val('');
+        $('#nickname')[0].setAttribute('placeholder', 'min length 3 characters');
+        return;
+    }
+
     $('#ask-nickname-form').hide();
     saveScoreData($('#nickname').val());
     $('#nickname').val('');
