@@ -59,7 +59,7 @@ const game = new Game().init(canvas);
 
 updateScoreNumber();
 
-document.onload = startGame();
+$(document).ready(startGame);
 
 function startGame() {
     const modal = $('#modal');
@@ -69,10 +69,7 @@ function startGame() {
     const loadingAnimation = $('#loading');
     let audioTimer;
 
-    $('a.header_link, .header_logo').click(e => {
-        game.pause();
-        $('#modal').fadeIn();
-    });
+    $('a.header_link, .header_logo').click(resetGame);
 
     modal.click(e => {
         if (e.target === startBtn) {
@@ -89,12 +86,16 @@ function startGame() {
     function run () {
         loadAudioData();
         audio.oncanplaythrough = () => {
+            if(!game.starded) {
+                clearTimeout(audioTimer);
+                modal.show();
+            }
             loadingAnimation.hide();
             modal.fadeOut();
-            setInterval(() => modalContent.show(), 100);
             countdown();
             game.prepare();
             playAudio();
+            modalContent.fadeIn();
         };
 
         const playAudio = () => {
@@ -103,6 +104,17 @@ function startGame() {
                 game.start();
             }, 4000);
         }
+    }
+
+    function resetGame() {
+        audio.pause();
+        game.pause();
+        clearTimeout(audioTimer);
+        modal.show();
+        loadingAnimation.hide();
+        resetCountdown();
+        game.model.update();
+        modalContent.fadeIn();
     }
 
     const loadAudioData = () => {
@@ -126,14 +138,7 @@ function startGame() {
             resetGame();
         });
 
-        function resetGame() {
-            audio.pause();
-            game.pause();
-            clearTimeout(audioTimer);
-            modal.show();
-            loadingAnimation.hide();
-            resetCountdown();
-        }
+
 
         //check the status of the game every 0.2 sec
         let checkGame = setInterval(() => {
@@ -239,7 +244,7 @@ function countdown() {
     timer = setInterval(() => {
         $('.countdown__area').text(--number);
         if(number === 0) {
-            resetCountdown()
+            resetCountdown();
         }
     }, 1000);
 
