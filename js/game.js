@@ -91,7 +91,7 @@ function startGame() {
                 modal.show();
             }
             loadingAnimation.hide();
-            modal.fadeOut();
+            modal.hide();
             countdown();
             game.prepare();
             playAudio();
@@ -144,7 +144,8 @@ function startGame() {
         let checkGame = setInterval(() => {
             if (audio.ended) {
                 game.pause();
-                localStorage.setItem('nodeHistory', JSON.stringify(game.controller.getNodeWrite()));
+                //localStorage.setItem('nodeHistory', JSON.stringify(game.controller.getNodeWrite()));
+                loadingAnimation.hide();
                 showSaveScoreWindow();
                 console.log('game stopped');
                 clearInterval(checkGame);
