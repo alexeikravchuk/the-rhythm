@@ -59,6 +59,7 @@ const game = new Game().init(canvas);
 
 updateScoreNumber();
 
+$("body").on("contextmenu", false);
 $(document).ready(startGame);
 
 function startGame() {
