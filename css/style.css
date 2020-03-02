@@ -81,6 +81,7 @@ html, body{
     padding: 5px 15px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    outline: none;
 }
 .header_link:hover, .start-btn:hover, .btn-form:hover {
     animation: swing 2s ease;
@@ -240,6 +241,7 @@ html, body{
     height: 95%;
     z-index: 5;
     transition: background-color 0.3s ease-out 0s;
+    outline: none;
 }
 
 @media (max-width: 321px){
@@ -463,4 +465,11 @@ li a {
         padding: 0.4rem;
         margin: 0.5rem;
     }
+}
+
+#game_container {
+    -moz-user-select: none; /* Mozilla Firefox */
+    -ms-user-select: none; /* Internet Explorer (не поддерживается) */
+    -o-user-select: none; /* Opera Presto (не поддерживается) */
+    -webkit-user-select: none; /* Google Chrome, Opera Next, Safari */
 }
