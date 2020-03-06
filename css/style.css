@@ -458,6 +458,26 @@ li a {
     font-style: normal;
 }
 
+.contacts li {
+    display: inline-block;
+    text-align: center;
+    margin: 0.5rem 0.8rem 1rem;
+    padding: 0.5rem 0;
+    width: 4rem;
+    height: 4rem;
+}
+.contacts li img {
+    height: 3rem;
+    max-width: 3.9rem;
+}
+
+.contacts li:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 50, 0.2);
+}
+
+a:active, a:focus {
+    outline: none;
+}
 @media (max-width: 430px) {
     .about__wrapper {
         font-size: 1.8rem;
