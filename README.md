@@ -1,4 +1,3 @@
-# the-rhythm
 my personal game project (demo version)
 
-https://alexeikravchuk.github.io/the-rhythm
+> [PRESS TO START](https://alexeikravchuk.github.io/the-rhythm)
